@@ -43,8 +43,9 @@ def get_time(file) :
 	line = open(file, 'r').read().split('\n')
 	old_time = line[len(line) - 2].split(' -')
 	hour = datetime.datetime.now().strftime("%c")
-	if (old_time[0] > hour) :
+	while (old_time[0] > hour) :
 		time.sleep(60)
+		hour = datetime.datetime.now().strftime("%c")
 
 def get_points_in_page(data) :
 	driver.find_element(By.LINK_TEXT, 'EXPERIÊNCIAS').click()
@@ -64,8 +65,8 @@ def logout() :
 	driver.quit()
 
 def webscrapper(data) :
-	account_login(data)
 	get_time(data[2])
+	account_login(data)
 	points = get_points_in_page(data)
 	save_data_in_file(data, points)
 	logout()
