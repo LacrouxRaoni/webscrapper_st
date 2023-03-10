@@ -83,7 +83,7 @@ def logout() :
 def webscrapper(data) :
 	get_time(data[2])
 	account_login(data)
-	points = get_points_in_page(data)
+	points = get_points_in_page()
 	save_data_in_file(data, points)
 	logout()
 
