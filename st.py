@@ -39,15 +39,31 @@ def account_login(data) :
 	driver.find_element(By.CLASS_NAME, 'login-btn').click()
 	load_page(0)
 
-def get_time(file) :
-	line = open(file, 'r').read().split('\n')
-	old_time = line[len(line) - 2].split(' -')
-	hour = datetime.datetime.now().strftime("%c")
-	while (old_time[0] > hour) :
-		time.sleep(60)
-		hour = datetime.datetime.now().strftime("%c")
+def atoi(string) :
+	n = 0
+	for i in range(len(string)) :
+		n = n * 10 + (ord(string[i]) - ord('0'))
+	return n
 
-def get_points_in_page(data) :
+def get_time(file) :
+	data_file = open(file, 'r').read().split('\n')
+	line = data_file[len(data_file) - 2].split(' -')
+	hour = datetime.datetime.now().strftime("%c")
+
+	splitted_line = line[0].split()
+	splitted_hour = hour.split()
+	
+	n1 = atoi(splitted_line[2])
+	n2 = atoi(splitted_hour[2])
+
+	if (n2 <= n1) :
+		line_time = datetime.datetime.strptime(splitted_line[3], "%H:%M:%S").time()
+		line_hour = datetime.datetime.strptime(splitted_hour[3], "%H:%M:%S").time()
+		while (str(line_hour) < str(line_time)) :
+			time.sleep(60)
+			line_hour = datetime.datetime.now().strftime("%H:%M:%S")
+
+def get_points_in_page() :
 	driver.find_element(By.LINK_TEXT, 'EXPERIÊNCIAS').click()
 	load_page(1)
 	return driver.find_element(By.CLASS_NAME, 'header-3-logged__content-user-points')
