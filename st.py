@@ -56,7 +56,7 @@ def get_time(file) :
 	n1 = atoi(splitted_line[2])
 	n2 = atoi(splitted_hour[2])
 
-	if (n2 <= n1) :
+	if (n2 == n1 or n2 - 1 == n1) :
 		line_time = datetime.datetime.strptime(splitted_line[3], "%H:%M:%S").time()
 		line_hour = datetime.datetime.strptime(splitted_hour[3], "%H:%M:%S").time()
 		while (str(line_hour) < str(line_time)) :
